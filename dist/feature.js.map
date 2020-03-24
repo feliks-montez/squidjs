@@ -1,0 +1,1 @@
+{"version":3,"file":"feature.js","sourceRoot":"","sources":["../src/feature.ts"],"names":[],"mappings":";AAOA,IAAI,QAAQ,GAA8B,EAAE,CAAA;AAE5C,QAAQ,CAAC,WAAW,GAAG;IACnB,YAAY,EAAE,EAAE;IAChB,KAAK,EAAE;QACH,QAAQ,EAAE;YACN,CAAC,EAAE,CAAC;YACJ,CAAC,EAAE,CAAC;YACJ,QAAQ,EAAE,CAAC;SACd;KACJ;CACJ,CAAA"}

@@ -1,0 +1,21 @@
+{
+  "name": "squidjs",
+  "version": "1.0.0",
+  "description": "A 2D <canvas> library",
+  "main": "dist/squid.js",
+  "dependencies": {
+    "lodash": "^4.17.15"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.149",
+    "tslint": "^6.1.0",
+    "typescript": "^3.8.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "build:watch": "tsc -w"
+  },
+  "author": "Feliks Montez",
+  "license": "ISC"
+}
