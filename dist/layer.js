@@ -67,6 +67,28 @@ class Layer {
             this.ctx.restore();
         }
     }
+    onclick(evt) {
+        this.children.forEach(child => {
+            if (child.onclick && child.pointInBounds(evt.offsetX, evt.offsetY))
+                child.onclick(evt);
+        });
+    }
+    onmousemove(evt) {
+        this.children.forEach(child => {
+            if (child.onmousemove && child.pointInBounds(evt.offsetX, evt.offsetY))
+                child.onmousemove(evt);
+            if (child.mouseinside && !child.pointInBounds(evt.offsetX, evt.offsetY)) {
+                if (child.onmouseout)
+                    child.onmouseout(evt);
+                child.mouseinside = false;
+            }
+            else if (!child.mouseinside && child.pointInBounds(evt.offsetX, evt.offsetY)) {
+                if (child.onmouseover)
+                    child.onmouseover(evt);
+                child.mouseinside = true;
+            }
+        });
+    }
     add(obj) {
         obj.root = this.root;
         obj.ctx = this.ctx;

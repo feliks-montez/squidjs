@@ -10,8 +10,6 @@ export class Layer {
     updateContinuously: boolean = true
     visible: boolean = true
     children: DisplayObject[] = []
-    onclick?: (evt: MouseEvent) => void
-    onmousemove?: (evt: MouseEvent) => void
 
     // unused, but implement Drawable
     // position = {x: 0, y: 0, rot: 0}
@@ -75,6 +73,25 @@ export class Layer {
             })
             this.ctx.restore()
         }        
+    }
+
+    onclick(evt: MouseEvent) {
+        this.children.forEach(child => {
+            if (child.onclick && child.pointInBounds(evt.offsetX, evt.offsetY)) child.onclick(evt)
+        })
+    }
+
+    onmousemove(evt: MouseEvent) {
+        this.children.forEach(child => {
+            if (child.onmousemove && child.pointInBounds(evt.offsetX, evt.offsetY)) child.onmousemove(evt)
+            if (child.mouseinside && !child.pointInBounds(evt.offsetX, evt.offsetY)) {
+                if (child.onmouseout) child.onmouseout(evt)
+                child.mouseinside = false
+            } else if (!child.mouseinside && child.pointInBounds(evt.offsetX, evt.offsetY)) {
+                if (child.onmouseover) child.onmouseover(evt)
+                child.mouseinside = true
+            }
+        })
     }
 
     add(obj: DisplayObject) {

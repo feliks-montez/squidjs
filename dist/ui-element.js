@@ -26,7 +26,9 @@ class UIContainer {
     constructor(x, y, width, height, key) {
         this.updateContinuously = false;
         this.visible = true;
-        this.children = [];
+        this.scale = 1;
+        // children: UIElement[] = []
+        this.mouseinside = false;
         this.x = x;
         this.y = y;
         this.width = width;
@@ -40,12 +42,16 @@ class UIContainer {
             y < this.y + this.height / 2);
     }
     update(dt) { }
+    preDraw() { }
+    postDraw() { }
     draw() {
         if (this.root && this.ctx) {
             const img = this.root.images[this.key];
             this.ctx.save();
             this.ctx.translate(this.x, this.y);
+            this.preDraw();
             this.ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, this.width, this.height);
+            this.postDraw();
             this.ctx.restore();
         }
     }

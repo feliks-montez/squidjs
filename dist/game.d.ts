@@ -11,9 +11,7 @@ export declare class Game {
     images: image_dict;
     width: number;
     height: number;
-    constructor(width: number, height: number, layers: {
-        [name: string]: string;
-    }, imageUrls: image_urls);
+    constructor(width: number, height: number, layers: string[], imageUrls: image_urls);
     set dims(d: number[]);
     update(dt: number): void;
     draw(): void;

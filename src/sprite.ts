@@ -26,8 +26,11 @@ export class Sprite implements DisplayObject {
     updateContinuously: boolean = true
     visible: boolean = true
     scale: number = 1
+    mouseinside = false
     onclick?: (evt: MouseEvent) => void
     onmousemove?: (evt: MouseEvent) => void
+    onmouseover?: (evt: MouseEvent) => void
+    onmouseout?: (evt: MouseEvent) => void
     spriteData: sprite_data = {
         states: {
             default: [0]
@@ -41,7 +44,6 @@ export class Sprite implements DisplayObject {
         this.numrows = numrows
         this.frame = this.spriteData.states["default"][0]
         this.fps = fps
-        console.log("Sprite()")
     }
 
     get x() {
@@ -137,7 +139,6 @@ export class Sprite implements DisplayObject {
     postDraw() {}
 
     draw() {
-        console.log("draw()")
         if (this.ctx) {
             this.ctx.save()
             this.ctx.translate(this.x, this.y)

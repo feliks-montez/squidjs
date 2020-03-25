@@ -23,8 +23,11 @@ export declare class Sprite implements DisplayObject {
     updateContinuously: boolean;
     visible: boolean;
     scale: number;
+    mouseinside: boolean;
     onclick?: (evt: MouseEvent) => void;
     onmousemove?: (evt: MouseEvent) => void;
+    onmouseover?: (evt: MouseEvent) => void;
+    onmouseout?: (evt: MouseEvent) => void;
     spriteData: sprite_data;
     animIndex: number;
     constructor(x: number, y: number, key: string, numcols?: number, numrows?: number, fps?: number);

@@ -10,14 +10,14 @@ class Game {
         this.layers = {};
         this.lastTime = Date.now();
         this.images = {};
-        Object.keys(layers).forEach((key) => {
-            let canvas = document.getElementById(layers[key]);
+        layers.forEach((key) => {
+            let canvas = document.getElementById(key);
             if (canvas) {
                 this.layers[key] = new layer_1.Layer(key, canvas);
                 this.layers[key].root = this;
             }
             else {
-                console.log("no element found with ID: ", layers[key]);
+                console.log("no element found with ID: ", key);
             }
         });
         this.width = width;

@@ -37,12 +37,16 @@ export class UIContainer implements DisplayObjectContainer {
     visible = true
     x: number
     y: number
+    scale: number = 1
     width: number
     height: number
     key: string
-    children: UIElement[] = []
+    // children: UIElement[] = []
+    mouseinside = false
     onclick?: (evt: MouseEvent) => void
     onmousemove?: (evt: MouseEvent) => void
+    onmouseover?: (evt: MouseEvent) => void
+    onmouseout?: (evt: MouseEvent) => void
     constructor(x: number, y: number, width: number, height: number, key: string) {
         this.x = x
         this.y = y
@@ -61,12 +65,17 @@ export class UIContainer implements DisplayObjectContainer {
 
     update(dt: number) {}
 
+    preDraw() {}
+    postDraw() {}
+
     draw() {
         if (this.root && this.ctx) {
             const img = this.root.images[this.key]
             this.ctx.save()
             this.ctx.translate(this.x, this.y)
+            this.preDraw()
             this.ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, this.width, this.height)
+            this.postDraw()
             this.ctx.restore()
         }
     }

@@ -11,14 +11,14 @@ export class Game {
     images: image_dict = {}
     width: number
     height: number
-    constructor(width: number, height: number, layers: {[name: string]: string}, imageUrls: image_urls) {
-        Object.keys(layers).forEach((key: string) => {
-            let canvas = document.getElementById(layers[key])
+    constructor(width: number, height: number, layers: string[], imageUrls: image_urls) {
+        layers.forEach((key: string) => {
+            let canvas = document.getElementById(key)
             if (canvas) {
                 this.layers[key] = new Layer(key, canvas as HTMLCanvasElement)
                 this.layers[key].root = this
             } else {
-                console.log("no element found with ID: ", layers[key])
+                console.log("no element found with ID: ", key)
             }
         })
         this.width = width

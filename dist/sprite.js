@@ -9,6 +9,7 @@ class Sprite {
         this.updateContinuously = true;
         this.visible = true;
         this.scale = 1;
+        this.mouseinside = false;
         this.spriteData = {
             states: {
                 default: [0]
@@ -21,7 +22,6 @@ class Sprite {
         this.numrows = numrows;
         this.frame = this.spriteData.states["default"][0];
         this.fps = fps;
-        console.log("Sprite()");
     }
     get x() {
         return this.position.x;
@@ -102,7 +102,6 @@ class Sprite {
     postDraw() { }
     draw() {
         var _a;
-        console.log("draw()");
         if (this.ctx) {
             this.ctx.save();
             this.ctx.translate(this.x, this.y);

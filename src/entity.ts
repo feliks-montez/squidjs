@@ -14,14 +14,18 @@ export interface DisplayObject {
     ctx?: CanvasRenderingContext2D
     updateContinuously: boolean
     visible: boolean
+    mouseinside: boolean
     x: number
     y: number
+    scale: number
 
     update(dt: number, parent?: DisplayObject | Layer): void
     draw(): void
     pointInBounds(x: number, y: number): boolean
     onclick?: (evt: MouseEvent) => void
     onmousemove?: (evt: MouseEvent) => void
+    onmouseover?: (evt: MouseEvent) => void
+    onmouseout?: (evt: MouseEvent) => void
 }
 
 export interface DisplayObjectContainer extends DisplayObject {
