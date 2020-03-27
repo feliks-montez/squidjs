@@ -2,6 +2,12 @@ import { DisplayObject } from "./entity"
 import { Sprite } from "./squid"
 import { Game } from "./game"
 
+// layer canvas should occupy full screen
+
+function matrix_2x3_create() {
+    return new Float32Array([1, 0, 0,  0, 1, 0]);
+}
+
 export class Layer {
     name: string
     canvas: HTMLCanvasElement
@@ -10,6 +16,9 @@ export class Layer {
     updateContinuously: boolean = true
     visible: boolean = true
     children: DisplayObject[] = []
+    redraw = true
+
+    _viewMatrix: Float32Array = matrix_2x3_create()
 
     // unused, but implement Drawable
     // position = {x: 0, y: 0, rot: 0}
@@ -52,7 +61,27 @@ export class Layer {
         return this.canvas.height
     }
 
+    setViewMatrix(m: Float32Array) {
+        this._viewMatrix = m;
+        this.redraw = true;
+    }
+
+    setTranslation(x: number, y: number) {
+        this._viewMatrix[2] = x;
+        this._viewMatrix[5] = y;
+        this.redraw = true;
+    }
+
+    setScaling(x: number, y: number) {
+        this._viewMatrix[0] = x;
+        this._viewMatrix[4] = y;
+        this.redraw = true;
+    }
+
     update(dt: number) {
+        const m = this._viewMatrix;
+        this.ctx?.setTransform(m[0], m[1], m[2], m[3], m[4], m[5]);
+
         // this.position.x += this.velocity.x * dt
         // this.position.y += this.velocity.y * dt
         // this.position.rot += this.velocity.rot * dt
@@ -67,12 +96,14 @@ export class Layer {
     draw() {
         if (this.ctx) {
             this.ctx.save()
-            this.ctx.clearRect(0, 0, this.width, this.height)
+            this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
             this.children.forEach(child => {
                 if (child.visible) child.draw()
             })
             this.ctx.restore()
-        }        
+        }
+
+        this.redraw = false;
     }
 
     onclick(evt: MouseEvent) {
@@ -96,7 +127,7 @@ export class Layer {
 
     add(obj: DisplayObject) {
         obj.root = this.root
-        obj.ctx = this.ctx
+        obj.layer = this;
         this.children.push(obj)
     }
 }

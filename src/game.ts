@@ -51,7 +51,7 @@ export class Game {
     draw() {
         Object.keys(this.layers).forEach(key => {
             const layer = this.layers[key]
-            if (layer.visible == true) layer.draw()
+            if (layer.visible == true && layer.redraw) layer.draw()
         })
     }
 

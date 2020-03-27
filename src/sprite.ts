@@ -1,6 +1,7 @@
 import './entity'
 import { vector_i, DisplayObject } from './entity'
 import { Game } from './game'
+import { Layer } from './layer'
 
 export type sprite_states = {
     default: number[] | number[][]
@@ -13,7 +14,7 @@ export type sprite_data = {
 
 export class Sprite implements DisplayObject {
     root?: Game
-    ctx?: CanvasRenderingContext2D
+    layer?: Layer
     position: vector_i
     velocity: vector_i = {x: 0, y: 0, rot: 0}
     acceleration: vector_i = {x: 0, y: 0, rot: 0}
@@ -44,6 +45,10 @@ export class Sprite implements DisplayObject {
         this.numrows = numrows
         this.frame = this.spriteData.states["default"][0]
         this.fps = fps
+    }
+
+    get ctx() {
+        return this.layer?.ctx
     }
 
     get x() {
@@ -146,11 +151,11 @@ export class Sprite implements DisplayObject {
             this.preDraw()
             if (this.frame instanceof Array) {
                 this.frame.forEach(frame => {
-                    this.ctx!.drawImage(this.root?.images[this.key]!, this.swidth*this.getSCol(frame), this.sheight*this.getSRow(frame), this.swidth, this.sheight, 
+                    this.ctx!.drawImage(this.root?.images[this.key]!, this.swidth*this.getSCol(frame), this.sheight*this.getSRow(frame), this.swidth, this.sheight,
                     -this.width/2, -this.height/2, this.width, this.height)
                 })
             } else {
-                this.ctx.drawImage(this.root?.images[this.key]!, this.swidth*this.getSCol(this.frame), this.sheight*this.getSRow(this.frame), this.swidth, this.sheight, 
+                this.ctx.drawImage(this.root?.images[this.key]!, this.swidth*this.getSCol(this.frame), this.sheight*this.getSRow(this.frame), this.swidth, this.sheight,
                     -this.width/2, -this.height/2, this.width, this.height)
             }
             this.postDraw()

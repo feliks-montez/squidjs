@@ -11,7 +11,7 @@ export const zeroVector: vector_i = {x: 0, y: 0, rot: 0}
 
 export interface DisplayObject {
     root?: Game
-    ctx?: CanvasRenderingContext2D
+    layer?: Layer
     updateContinuously: boolean
     visible: boolean
     mouseinside: boolean
@@ -19,7 +19,7 @@ export interface DisplayObject {
     y: number
     scale: number
 
-    update(dt: number, parent?: DisplayObject | Layer): void
+    update(dt: number): void
     draw(): void
     pointInBounds(x: number, y: number): boolean
     onclick?: (evt: MouseEvent) => void
@@ -57,9 +57,7 @@ export class BoxEntity {
         return this.position.x
     }
 
-
-
-    update(dt: number, parent: DisplayObject | Layer) {
+    update(dt: number) {
 
     }
 
