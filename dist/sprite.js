@@ -23,23 +23,36 @@ class Sprite {
         this.frame = this.spriteData.states["default"][0];
         this.fps = fps;
     }
+    get ctx() {
+        var _a;
+        return (_a = this.layer) === null || _a === void 0 ? void 0 : _a.ctx;
+    }
     get x() {
         return this.position.x;
     }
     set x(n) {
-        this.position.x = n;
+        if (n != this.position.x) {
+            this.position.x = n;
+            this.layer.redraw = true;
+        }
     }
     get y() {
         return this.position.y;
     }
     set y(n) {
-        this.position.y = n;
+        if (n != this.position.y) {
+            this.position.y = n;
+            this.layer.redraw = true;
+        }
     }
     get rotation() {
         return this.position.rot;
     }
     set rotation(rad) {
-        this.position.rot = rad;
+        if (rad != this.position.rot) {
+            this.position.rot = rad;
+            this.layer.redraw = true;
+        }
     }
     get angle() {
         return this.position.rot * 180 / 2 / Math.PI;

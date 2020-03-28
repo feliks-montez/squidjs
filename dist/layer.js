@@ -1,5 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+// layer canvas should occupy full screen
+function matrix_2x3_create() {
+    // [a, b, c, d, e, f]
+    // equals:
+    // [ a c e ]
+    // [ b d f ]
+    return new Float32Array([1, 0, 0, 1, 0, 0]);
+}
+function matrix_2x3_equals(a, b) {
+    for (let i = 0; i < a.length; i++) {
+        if (a[i] != b[i]) {
+            return false;
+        }
+    }
+    return true;
+}
 class Layer {
     // unused, but implement Drawable
     // position = {x: 0, y: 0, rot: 0}
@@ -9,6 +25,8 @@ class Layer {
         this.updateContinuously = true;
         this.visible = true;
         this.children = [];
+        this.redraw = true;
+        this._viewMatrix = matrix_2x3_create();
         this.name = name;
         this.canvas = canvas;
         const ctx = this.canvas.getContext('2d');
@@ -44,7 +62,29 @@ class Layer {
     get height() {
         return this.canvas.height;
     }
+    setViewMatrix(m) {
+        // only update if matrix values have changed
+        if (matrix_2x3_equals(this._viewMatrix, m) == false) {
+            this._viewMatrix = m;
+            this.redraw = true;
+        }
+    }
+    setTranslation(x, y) {
+        const m = new Float32Array(this._viewMatrix);
+        m[4] = x; // e
+        m[5] = y; // f
+        this.setViewMatrix(m);
+    }
+    setScaling(x, y) {
+        const m = this._viewMatrix;
+        m[0] = x; // a
+        m[3] = y; // d
+        this.setViewMatrix(m);
+    }
     update(dt) {
+        const m = this._viewMatrix;
+        this.ctx.setTransform(m[0], m[1], m[2], m[3], m[4], m[5]);
+        // this.ctx?.setTransform(1, 0, 0, 0, 1, 0);
         // this.position.x += this.velocity.x * dt
         // this.position.y += this.velocity.y * dt
         // this.position.rot += this.velocity.rot * dt
@@ -59,13 +99,15 @@ class Layer {
     draw() {
         if (this.ctx) {
             this.ctx.save();
-            this.ctx.clearRect(0, 0, this.width, this.height);
+            this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
             this.children.forEach(child => {
                 if (child.visible)
                     child.draw();
             });
             this.ctx.restore();
         }
+        console.log("REDRAW");
+        this.redraw = false;
     }
     onclick(evt) {
         this.children.forEach(child => {
@@ -91,7 +133,7 @@ class Layer {
     }
     add(obj) {
         obj.root = this.root;
-        obj.ctx = this.ctx;
+        obj.layer = this;
         this.children.push(obj);
     }
 }

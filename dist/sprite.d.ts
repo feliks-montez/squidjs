@@ -1,6 +1,7 @@
 import './entity';
 import { vector_i, DisplayObject } from './entity';
 import { Game } from './game';
+import { Layer } from './layer';
 export declare type sprite_states = {
     default: number[] | number[][];
     [name: string]: number[] | number[][];
@@ -10,7 +11,7 @@ export declare type sprite_data = {
 };
 export declare class Sprite implements DisplayObject {
     root?: Game;
-    ctx?: CanvasRenderingContext2D;
+    layer?: Layer;
     position: vector_i;
     velocity: vector_i;
     acceleration: vector_i;
@@ -31,6 +32,7 @@ export declare class Sprite implements DisplayObject {
     spriteData: sprite_data;
     animIndex: number;
     constructor(x: number, y: number, key: string, numcols?: number, numrows?: number, fps?: number);
+    get ctx(): CanvasRenderingContext2D | undefined;
     get x(): number;
     set x(n: number);
     get y(): number;

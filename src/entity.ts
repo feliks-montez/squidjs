@@ -34,6 +34,7 @@ export interface DisplayObjectContainer extends DisplayObject {
 
 export class BoxEntity implements DisplayObject {
     ctx?: CanvasRenderingContext2D
+    layer?: Layer
     updateContinuously: boolean
     visible: boolean
     position: vector_i
@@ -77,7 +78,12 @@ export class BoxEntity implements DisplayObject {
     }
 
     update(dt: number) {
-
+        this.position.x += this.velocity.x * dt
+        this.position.y += this.velocity.y * dt
+        this.position.rot += this.velocity.rot * dt
+        this.velocity.x += this.acceleration.x * dt
+        this.velocity.y += this.acceleration.y * dt
+        this.velocity.rot += this.acceleration.rot * dt
     }
 
     draw() {

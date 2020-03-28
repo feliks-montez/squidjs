@@ -55,21 +55,30 @@ export class Sprite implements DisplayObject {
         return this.position.x
     }
     set x(n: number) {
-        this.position.x = n
+        if (n != this.position.x) {
+            this.position.x = n
+            this.layer!.redraw = true;
+        }
     }
 
     get y() {
         return this.position.y
     }
     set y(n: number) {
-        this.position.y = n
+        if (n != this.position.y) {
+            this.position.y = n
+            this.layer!.redraw = true;
+        }
     }
 
     get rotation() {
         return this.position.rot
     }
     set rotation(rad: number) {
-        this.position.rot = rad
+        if (rad != this.position.rot) {
+            this.position.rot = rad
+            this.layer!.redraw = true;
+        }
     }
 
     get angle() {
