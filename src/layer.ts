@@ -114,8 +114,13 @@ export class Layer {
 
     draw() {
         if (this.ctx) {
+
             this.ctx.save()
+            this.ctx.setTransform(1, 0, 0, 1, 0, 0);
             this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
+            this.ctx.restore();
+
+            this.ctx.save()
             this.children.forEach(child => {
                 if (child.visible) child.draw()
             })
