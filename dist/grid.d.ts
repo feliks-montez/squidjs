@@ -10,10 +10,11 @@ export declare class Tile extends Sprite {
     constructor(grid: GridLayout, row: number, col: number, key: string);
     get x(): number;
     get y(): number;
+    get layer(): Layer | undefined;
 }
 export declare class GridLayout implements DisplayObjectContainer {
     root?: Game;
-    ctx?: CanvasRenderingContext2D;
+    layer?: Layer;
     updateContinuously: boolean;
     visible: boolean;
     mouseinside: boolean;
@@ -28,6 +29,7 @@ export declare class GridLayout implements DisplayObjectContainer {
     constructor(x: number, y: number, numRows: number, numCols: number);
     get width(): number;
     get height(): number;
+    get ctx(): CanvasRenderingContext2D | undefined;
     update(dt: number, parent?: DisplayObject | Layer): void;
     preDraw(): void;
     postDraw(): void;

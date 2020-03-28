@@ -8,14 +8,14 @@ export interface vector_i {
 export declare const zeroVector: vector_i;
 export interface DisplayObject {
     root?: Game;
-    ctx?: CanvasRenderingContext2D;
+    layer?: Layer;
     updateContinuously: boolean;
     visible: boolean;
     mouseinside: boolean;
     x: number;
     y: number;
     scale: number;
-    update(dt: number, parent?: DisplayObject | Layer): void;
+    update(dt: number): void;
     draw(): void;
     pointInBounds(x: number, y: number): boolean;
     onclick?(evt: MouseEvent): void;
@@ -25,14 +25,19 @@ export interface DisplayObject {
 }
 export interface DisplayObjectContainer extends DisplayObject {
 }
-export declare class BoxEntity {
+export declare class BoxEntity implements DisplayObject {
     ctx?: CanvasRenderingContext2D;
+    layer?: Layer;
     updateContinuously: boolean;
     visible: boolean;
     position: vector_i;
     velocity: vector_i;
     acceleration: vector_i;
-    constructor(position: vector_i, { updateContinuously, visible, velocity, acceleration }: {
+    mouseinside: boolean;
+    scale: number;
+    width: number;
+    height: number;
+    constructor(position: vector_i, w: number, h: number, { updateContinuously, visible, velocity, acceleration }: {
         updateContinuously?: boolean | undefined;
         visible?: boolean | undefined;
         velocity?: {
@@ -47,6 +52,8 @@ export declare class BoxEntity {
         } | undefined;
     }, devAttrs?: Object);
     get x(): number;
-    update(dt: number, parent: DisplayObject | Layer): void;
+    get y(): number;
+    pointInBounds(x: number, y: number): boolean;
+    update(dt: number): void;
     draw(): void;
 }

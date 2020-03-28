@@ -48,8 +48,9 @@ class Game {
     draw() {
         Object.keys(this.layers).forEach(key => {
             const layer = this.layers[key];
-            if (layer.visible == true)
+            if (layer.visible == true && layer.redraw == true) {
                 layer.draw();
+            }
         });
     }
     gameLoop() {

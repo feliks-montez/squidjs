@@ -12,7 +12,6 @@ export class Tile extends Sprite {
         super(0, 0, key)
         this.grid = grid
         this.root = this.grid.root
-        this.ctx = this.grid.ctx
         this.row = row
         this.col = col
     }
@@ -24,11 +23,15 @@ export class Tile extends Sprite {
     get y(): number {
         return (this.height + this.grid.tileSpacing) * this.row
     }
+
+    get layer() {
+        return this.grid.layer
+    }
 }
 
 export class GridLayout implements DisplayObjectContainer {
     root?: Game
-    ctx?: CanvasRenderingContext2D
+    layer?: Layer
     updateContinuously: boolean = true
     visible: boolean = true
     mouseinside: boolean = false
@@ -57,6 +60,11 @@ export class GridLayout implements DisplayObjectContainer {
         return this.numRows * (this.tiles[0].height + this.tileSpacing)
     }
 
+
+    get ctx() {
+        return this.layer!.ctx
+    }
+
     update(dt: number, parent?: DisplayObject | Layer) {
 
     }
@@ -76,7 +84,7 @@ export class GridLayout implements DisplayObjectContainer {
             this.ctx.restore()
         }
     }
-    
+
     pointInBounds(x: number, y: number): boolean {
         return (
             x > this.x-this.width/2 &&

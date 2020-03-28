@@ -8,7 +8,6 @@ class Tile extends squid_1.Sprite {
         this.colSpan = 1;
         this.grid = grid;
         this.root = this.grid.root;
-        this.ctx = this.grid.ctx;
         this.row = row;
         this.col = col;
     }
@@ -17,6 +16,9 @@ class Tile extends squid_1.Sprite {
     }
     get y() {
         return (this.height + this.grid.tileSpacing) * this.row;
+    }
+    get layer() {
+        return this.grid.layer;
     }
 }
 exports.Tile = Tile;
@@ -39,6 +41,9 @@ class GridLayout {
     }
     get height() {
         return this.numRows * (this.tiles[0].height + this.tileSpacing);
+    }
+    get ctx() {
+        return this.layer.ctx;
     }
     update(dt, parent) {
     }

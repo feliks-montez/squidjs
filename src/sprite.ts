@@ -1,6 +1,7 @@
 import './entity'
 import { vector_i, DisplayObject } from './entity'
 import { Game } from './game'
+import { Layer } from './layer'
 
 export type sprite_states = {
     default: number[] | number[][]
@@ -13,7 +14,7 @@ export type sprite_data = {
 
 export class Sprite implements DisplayObject {
     root?: Game
-    ctx?: CanvasRenderingContext2D
+    layer?: Layer
     position: vector_i
     velocity: vector_i = {x: 0, y: 0, rot: 0}
     acceleration: vector_i = {x: 0, y: 0, rot: 0}
@@ -46,25 +47,38 @@ export class Sprite implements DisplayObject {
         this.fps = fps
     }
 
+    get ctx() {
+        return this.layer?.ctx
+    }
+
     get x() {
         return this.position.x
     }
     set x(n: number) {
-        this.position.x = n
+        if (n != this.position.x) {
+            this.position.x = n
+            this.layer!.redraw = true;
+        }
     }
 
     get y() {
         return this.position.y
     }
     set y(n: number) {
-        this.position.y = n
+        if (n != this.position.y) {
+            this.position.y = n
+            this.layer!.redraw = true;
+        }
     }
 
     get rotation() {
         return this.position.rot
     }
     set rotation(rad: number) {
-        this.position.rot = rad
+        if (rad != this.position.rot) {
+            this.position.rot = rad
+            this.layer!.redraw = true;
+        }
     }
 
     get angle() {
@@ -146,11 +160,11 @@ export class Sprite implements DisplayObject {
             this.preDraw()
             if (this.frame instanceof Array) {
                 this.frame.forEach(frame => {
-                    this.ctx!.drawImage(this.root?.images[this.key]!, this.swidth*this.getSCol(frame), this.sheight*this.getSRow(frame), this.swidth, this.sheight, 
+                    this.ctx!.drawImage(this.root?.images[this.key]!, this.swidth*this.getSCol(frame), this.sheight*this.getSRow(frame), this.swidth, this.sheight,
                     -this.width/2, -this.height/2, this.width, this.height)
                 })
             } else {
-                this.ctx.drawImage(this.root?.images[this.key]!, this.swidth*this.getSCol(this.frame), this.sheight*this.getSRow(this.frame), this.swidth, this.sheight, 
+                this.ctx.drawImage(this.root?.images[this.key]!, this.swidth*this.getSCol(this.frame), this.sheight*this.getSRow(this.frame), this.swidth, this.sheight,
                     -this.width/2, -this.height/2, this.width, this.height)
             }
             this.postDraw()
