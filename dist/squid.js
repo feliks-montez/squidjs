@@ -8,11 +8,16 @@ const game_1 = require("./game");
 exports.Game = game_1.Game;
 const image_loader_1 = require("./image-loader");
 exports.ImageLoader = image_loader_1.ImageLoader;
+const grid_1 = require("./grid");
+exports.Tile = grid_1.Tile;
+exports.GridLayout = grid_1.GridLayout;
 const Squid = {
     ImageLoader: image_loader_1.ImageLoader,
     Game: game_1.Game,
     Sprite: sprite_1.Sprite,
-    UIContainer: ui_element_1.UIContainer
+    UIContainer: ui_element_1.UIContainer,
+    GridLayout: grid_1.GridLayout,
+    Tile: grid_1.Tile
 };
 exports.default = Squid;
 //# sourceMappingURL=squid.js.map
