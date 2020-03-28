@@ -128,7 +128,7 @@ export class Layer {
         }
 
         console.log("REDRAW")
-        // this.redraw = false;
+        this.redraw = false;
     }
 
     onclick(evt: MouseEvent) {

@@ -128,6 +128,7 @@ export class Sprite implements DisplayObject {
         const frameList = this.spriteData.states[this.curState]
         this.animIndex = (this.animIndex + 1) % frameList.length
         this.frame = frameList[this.animIndex]
+        this.layer!.redraw = true;
     }
 
     calculateFrame(dt: number) {

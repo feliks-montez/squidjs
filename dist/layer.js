@@ -110,7 +110,7 @@ class Layer {
             this.ctx.restore();
         }
         console.log("REDRAW");
-        // this.redraw = false;
+        this.redraw = false;
     }
     onclick(evt) {
         this.children.forEach(child => {
