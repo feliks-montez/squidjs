@@ -1,5 +1,5 @@
 import { DisplayObject, DisplayObjectContainer } from "./entity"
-import { Game } from "./squid"
+import { Layer } from "./layer"
 
 export interface UIElement extends DisplayObject{}
 
@@ -31,8 +31,7 @@ export interface UIElement extends DisplayObject{}
 // }
 
 export class UIContainer implements DisplayObjectContainer {
-    root?: Game
-    ctx?: CanvasRenderingContext2D
+    layer?: Layer
     updateContinuously = false
     visible = true
     x: number
@@ -53,6 +52,10 @@ export class UIContainer implements DisplayObjectContainer {
         this.width = width
         this.height = height
         this.key = key
+    }
+
+    get ctx() {
+        return this.layer?.ctx
     }
 
     pointInBounds(x: number, y: number): boolean {

@@ -35,6 +35,10 @@ class UIContainer {
         this.height = height;
         this.key = key;
     }
+    get ctx() {
+        var _a;
+        return (_a = this.layer) === null || _a === void 0 ? void 0 : _a.ctx;
+    }
     pointInBounds(x, y) {
         return (x > this.x - this.width / 2 &&
             x < this.x + this.width / 2 &&
