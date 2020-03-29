@@ -100,7 +100,7 @@ class Sprite {
         this.dtSum = this.dtSum + dt;
         if (this.dtSum >= 1 / this.fps) {
             this.setNextFrame();
-            this.dtSum -= 1 / this.fps;
+            this.dtSum = this.dtSum % 1 / this.fps;
         }
     }
     update(dt) {
