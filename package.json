@@ -4,7 +4,7 @@
   "description": "A 2D <canvas> library",
   "main": "dist/squid.js",
   "dependencies": {
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.149",
